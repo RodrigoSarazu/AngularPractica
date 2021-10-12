@@ -1,0 +1,42 @@
+<form class="booking-form" [formGroup]="bookingForm">
+    <h1>Realiza tu reserva</h1>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+          <input type="text" formControlName="name" matInput>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput>
+      </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Personas</mat-label>
+            <input type="number" formControlName="customers" matInput>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Turno</mat-label>
+            <mat-select formControlName="time">
+              <mat-option *ngFor="let restaurantTime of restaurant.turns" [value]="restaurantTime.id">
+                <!--Trayendo el dato de los turnos para poder ser llamados--> 
+                {{restaurantTime.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Día</mat-label>
+            <input matInput [matDatepicker]="date" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+          </mat-form-field>
+    </div>
+    <div class="text-right">
+        <!--Lo que va a hacer si el formulario es valido esto causa que no se pueda dar al botón hasta tener todos los campos-->
+        <!--En este boton va a generar la reserva enviandolo a funcion de sendBooking-->
+        <button (click)="sendBooking()" type="submit" mat-button color="primary" [disabled]="!bookingForm.valid">Reservar</button>
+        <!--Directamente va a reservar y pagar-->
+        <button (click)="payBooking()" mat-button  color="secundary" [disabled]="!bookingForm.valid">Reservar y pagar</button>
+    </div>
+</form>
